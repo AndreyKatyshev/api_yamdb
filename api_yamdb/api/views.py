@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import get_object_or_404
 
 from rest_framework import filters, mixins, permissions, viewsets
@@ -48,3 +49,5 @@ class CommentViewSet(viewsets.ModelViewSet):
             title=self.get_title(),
             review=self.get_review()
         )
+=======
+>>>>>>> develop_1
