@@ -2,6 +2,8 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils import timezone
 
+from users.models import User
+
 
 class Review(models.Model):
     author = models.ForeignKey(
@@ -71,28 +73,6 @@ class Comment(models.Model):
         return f'комментарий: {self.text[0:15]}'
 
 
-class Rating(models.Model):
-    # author = models.ForeignKey(
-    #     User,
-    #     null=True,
-    #     on_delete=models.CASCADE,
-    #     related_name='score',
-    #     verbose_name = 'оценьщик'
-    # )
-    title = models.ForeignKey(
-        Title,
-        on_delete=models.CASCADE,
-        related_name='ratings',
-        verbose_name = 'оцениваемое произведение'
-    )
-    rating = models.FloatField(
-        related_name='ratings',
-        verbose_name = 'оценка',
-        null=True,
-        blank=True,
-    )
-
-
 class Title(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название')
     year = models.IntegerField(
@@ -122,6 +102,29 @@ class Title(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Rating(models.Model):
+    # author = models.ForeignKey(
+    #     User,
+    #     null=True,
+    #     on_delete=models.CASCADE,
+    #     related_name='score',
+    #     verbose_name = 'оценьщик'
+    # )
+    # title = models.ForeignKey(
+    #     Title,
+    #     on_delete=models.CASCADE,
+    #     related_name='ratings',
+    #     verbose_name = 'оцениваемое произведение'
+    # )
+    # rating = models.FloatField(
+    #     related_name='ratings',
+    #     verbose_name = 'оценка',
+    #     null=True,
+    #     blank=True,
+    # )
+    pass 
 
 
 class GenreTitle(models.Model):
