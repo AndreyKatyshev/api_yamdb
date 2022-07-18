@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.utils import timezone
 
-from api_yamdb.api_yamdb.review.models import Category, Genre, Title
+from api_yamdb.review.models import Category, Genre, Title
 
 
 class CategorySerializer(serializers.ModelSerializer):

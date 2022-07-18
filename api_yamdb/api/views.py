@@ -2,10 +2,10 @@ from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from api_yamdb.api_yamdb.api.filters import TitleFilter
-from api_yamdb.api_yamdb.api.permissions import IsAdmin, ReadOnly
-from api_yamdb.api_yamdb.api.serializers import TitleSerializer, TitleCreateSerializer, GenreSerializer, CategorySerializer
-from api_yamdb.api_yamdb.review.models import Title, Genre, Category
+from api_yamdb.api.filters import TitleFilter
+from api_yamdb.api.permissions import IsAdmin, ReadOnly
+from api_yamdb.api.serializers import TitleSerializer, TitleCreateSerializer, GenreSerializer, CategorySerializer
+from api_yamdb.review.models import Title, Genre, Category
 
 
 class TitleViewSet(viewsets.ModelViewSet):

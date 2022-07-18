@@ -1,8 +1,8 @@
 from django.urls import include, path
 from rest_framework import routers
 
-from api_yamdb.api_yamdb.api.views import (CategoryViewSet, GenreViewSet,
-                                           TitleViewSet)
+from api_yamdb.api.views import (CategoryViewSet, GenreViewSet,
+                                 TitleViewSet)
 
 v1 = routers.DefaultRouter()
 v1.register('titles', TitleViewSet, basename='titles')
