@@ -4,7 +4,7 @@ from .models import Comment, Review
 
 class ReviewAdmin(admin.ModelAdmin):
 
-    list_display = ('pk', 'text', 'pub_date', 'author', 'title')
+    list_display = ('pk', 'text', 'pub_date', 'author')
     search_fields = ('text', 'author', 'title')
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
@@ -12,9 +12,9 @@ class ReviewAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
 
-    list_display = ('pk', 'text', 'created', 'author', 'review')
+    list_display = ('pk', 'text', 'pub_date', 'author', 'review')
     search_fields = ('text', 'author', 'review')
-    list_filter = ('created',)
+    list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
 
 

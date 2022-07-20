@@ -1,6 +1,6 @@
 import django_filters as filters
 
-from api_yamdb.review.models import Title
+from review.models import Title
 
 
 class TitleFilter(filters.FilterSet):
