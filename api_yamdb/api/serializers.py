@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 
 from django.utils import timezone
 from django.db.models import Avg
@@ -10,11 +11,21 @@ from review.models import Category, Genre, Title, Comment, Review
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username')
-
     class Meta:
-        fields = '__all__'
         model = Review
-        read_only_fields = ('title',)
+        fields = ('id', 'author', 'text', 'pub_date', 'score',)
+
+    def validate(self, data):
+        desired_review = Review.objects.filter(
+            title_id=self.context['view'].kwargs.get('title_id'),
+            author=self.context['request'].user
+        )
+        if self.context['request'].method == 'POST':
+            if desired_review:
+                raise serializers.ValidationError(
+                    'Нельзя писать больше одного отзыва!')
+        return data
+        
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -22,8 +33,8 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only=True, slug_field='username')
 
     class Meta:
-        fields = '__all__'
         model = Comment
+        fields = ('id', 'author', 'review', 'text', 'pub_date')
         read_only_fields = ('review',)
 
 
