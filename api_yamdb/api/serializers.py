@@ -1,11 +1,9 @@
-from django.shortcuts import get_object_or_404
-
 from django.utils import timezone
 from django.db.models import Avg
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from review.models import Category, Genre, Title, Comment, Review
+from reviews.models import Category, Genre, Title, Comment, Review
 
 
 class ReviewSerializer(serializers.ModelSerializer):

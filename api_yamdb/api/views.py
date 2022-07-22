@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from review.models import Comment, Rating, Review, Title, Genre, Category
+from reviews.models import Comment, Rating, Review, Title, Genre, Category
 from .serializers import (
     CommentSerializer, RatingSerializer, ReviewSerializer,
     TitleSerializer, TitleCreateSerializer, GenreSerializer,
