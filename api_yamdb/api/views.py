@@ -42,7 +42,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return get_object_or_404(Review, pk=self.kwargs.get('review_id'))
 
     def get_queryset(self):
-        return self.get_review().comments
+        return self.get_review().comments.all()
 
     def perform_create(self, serializer):
         serializer.save(
@@ -69,6 +69,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdmin | ReadOnly,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
+    # lookup_field = 'slug'
 
     @action(
         detail=False, methods=['delete'],

@@ -2,12 +2,18 @@ from rest_framework import permissions
 
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
+    def has_permission(self, request, view):
         return (
-            request.user == obj.author
+            request.user.is_authenticated
             or request.method in permissions.SAFE_METHODS
         )
-    pass
+    def has_object_permission(self, request, view, obj):
+        return (
+            request.method in permissions.SAFE_METHODS
+            or request.user == obj.author
+            or request.user.is_moderator
+            or request.user.is_admin
+        )
 
 
 class ReadOnly(permissions.BasePermission):
