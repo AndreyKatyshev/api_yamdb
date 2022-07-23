@@ -1,7 +1,6 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils import timezone
-
 from users.models import User
 
 
@@ -43,7 +42,7 @@ class Review(models.Model):
         related_name='reviews',
         verbose_name='Автор',
     )
-    title= models.ForeignKey(
+    title = models.ForeignKey(
         Title,
         on_delete=models.CASCADE,
         related_name='reviews',
@@ -59,7 +58,7 @@ class Review(models.Model):
         db_index=True
     )
     score = models.IntegerField(
-        'оценка',  
+        'оценка',
     )
 
     class Meta:
@@ -72,8 +71,6 @@ class Review(models.Model):
                 name='unique_author_title'
             )
         ]
-
-
 
     def __str__(self):
         return self.text[0:15]
@@ -110,29 +107,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'комментарий: {self.text[0:15]}'
-
-
-class Rating(models.Model):
-    # author = models.ForeignKey(
-    #     User,
-    #     null=True,
-    #     on_delete=models.CASCADE,
-    #     related_name='score',
-    #     verbose_name = 'оценьщик'
-    # )
-    # title = models.ForeignKey(
-    #     Title,
-    #     on_delete=models.CASCADE,
-    #     related_name='ratings',
-    #     verbose_name = 'оцениваемое произведение'
-    # )
-    # rating = models.FloatField(
-    #     related_name='ratings',
-    #     verbose_name = 'оценка',
-    #     null=True,
-    #     blank=True,
-    # )
-    pass 
 
 
 class GenreTitle(models.Model):

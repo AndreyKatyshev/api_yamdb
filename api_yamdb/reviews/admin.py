@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Comment, Review
 
+
 class ReviewAdmin(admin.ModelAdmin):
 
     list_display = ('pk', 'text', 'pub_date', 'author')

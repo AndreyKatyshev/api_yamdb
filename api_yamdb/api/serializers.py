@@ -1,14 +1,13 @@
-from django.utils import timezone
 from django.db.models import Avg
+from django.utils import timezone
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
-
-from reviews.models import Category, Genre, Title, Comment, Review
+from reviews.models import Category, Comment, Genre, Review, Title
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username')
+
     class Meta:
         model = Review
         fields = ('id', 'author', 'text', 'pub_date', 'score',)
@@ -23,7 +22,6 @@ class ReviewSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     'Нельзя писать больше одного отзыва!')
         return data
-        
 
 
 class CommentSerializer(serializers.ModelSerializer):

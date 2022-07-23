@@ -1,5 +1,4 @@
-# from django.conf import settings
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
@@ -14,7 +13,7 @@ from .models import User
 from .permissions import IsAdmin
 from .serializers import SignupSerializer, TokenSerializer, UserSerializer
 
-codegen = PasswordResetTokenGenerator()
+codegen = default_token_generator
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -63,10 +62,6 @@ class SignupView(APIView):
         confirmation_code = codegen.make_token(user)
         mail_subject = 'Ваш код подтверждения'
         message = f'Код подтверждения - {confirmation_code}'
-
-        if is_created:
-            user.is_active = False
-            user.save()
 
         send_mail(
             mail_subject,
