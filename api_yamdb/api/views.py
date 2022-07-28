@@ -1,12 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status, viewsets
-from rest_framework.decorators import action
+from rest_framework import filters, viewsets
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.response import Response
 from reviews.models import Category, Genre, Review, Title
 
 from .filters import TitleFilter
+from .mixins import Mixin
 from .permissions import IsAdmin, IsAuthorOrReadOnly, ReadOnly
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer,
@@ -62,40 +61,19 @@ class TitleViewSet(viewsets.ModelViewSet):
         return TitleSerializer
 
 
-class GenreViewSet(viewsets.ModelViewSet):
+class GenreView(Mixin):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    permission_classes = (IsAdmin | ReadOnly,)
+    permission_classes = (IsAdmin,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('name',)
-    # lookup_field = 'slug'
-
-    @action(
-        detail=False, methods=['delete'],
-        url_path=r'(?P<slug>\w+)',
-        lookup_field='slug', url_name='category_slug'
-    )
-    def get_genre(self, request, slug):
-        category = self.get_object()
-        serializer = CategorySerializer(category)
-        category.delete()
-        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+    search_fields = ('name', )
+    lookup_field = 'slug'
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryView(Mixin):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = (IsAdmin | ReadOnly,)
+    permission_classes = (IsAdmin,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('name',)
-
-    @action(
-        detail=False, methods=['delete'],
-        url_path=r'(?P<slug>\w+)',
-        lookup_field='slug', url_name='category_slug'
-    )
-    def get_category(self, request, slug):
-        category = self.get_object()
-        serializer = CategorySerializer(category)
-        category.delete()
-        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+    search_fields = ('name', )
+    lookup_field = 'slug'
